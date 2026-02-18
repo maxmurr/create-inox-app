@@ -1,6 +1,6 @@
 {
 	"name": "create-inox-app",
-	"version": "0.3.0",
+	"version": "0.3.1",
 	"description": "Scaffold production-ready monorepo projects with one command",
 	"type": "module",
 	"license": "MIT",
@@ -8,7 +8,8 @@
 		"create-inox-app": "./dist/cli.js"
 	},
 	"files": [
-		"dist"
+		"dist",
+		"README.md"
 	],
 	"engines": {
 		"node": ">=20"

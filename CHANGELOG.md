@@ -1,5 +1,11 @@
 # create-inox-app
 
+## 0.3.1
+
+### Patch Changes
+
+- Fix missing README on npm by explicitly including it in package files
+
 ## 0.3.0
 
 ### Minor Changes
