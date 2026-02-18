@@ -1,5 +1,11 @@
 # create-inox-app
 
+## 0.2.2
+
+### Patch Changes
+
+- Register setup task in turbo.json so `bun setup` works
+
 ## 0.2.1
 
 ### Patch Changes
