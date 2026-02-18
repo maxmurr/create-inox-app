@@ -1,5 +1,11 @@
 # create-inox-app
 
+## 0.3.2
+
+### Patch Changes
+
+- Warn about credential placeholders in post-install output and fix .env.example DB credentials
+
 ## 0.3.1
 
 ### Patch Changes

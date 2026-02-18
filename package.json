@@ -1,6 +1,6 @@
 {
 	"name": "create-inox-app",
-	"version": "0.3.1",
+	"version": "0.3.2",
 	"description": "Scaffold production-ready monorepo projects with one command",
 	"type": "module",
 	"license": "MIT",
