@@ -1,5 +1,11 @@
 # create-inox-app
 
+## 0.2.4
+
+### Patch Changes
+
+- Update CLI theme to match INOX brand CI (red/orange gradient, red accents). Fix Ctrl+C not exiting on first prompt.
+
 ## 0.2.3
 
 ### Patch Changes
