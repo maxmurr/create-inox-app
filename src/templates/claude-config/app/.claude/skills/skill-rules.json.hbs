@@ -1,0 +1,309 @@
+{
+  "version": "1.0",
+  "skills": {
+    "turborepo": {
+      "type": "domain",
+      "priority": "high",
+      "enforcement": "suggest",
+      "promptTriggers": {
+        "keywords": [
+          "turbo.json",
+          "monorepo",
+          "turborepo",
+          "turbo run",
+          "turbo cache",
+          "dependson",
+          "turbo pipeline"
+        ],
+        "intentPatterns": [
+          "(task|pipeline|cache).*(turbo|monorepo)",
+          "(add|create).*(package|workspace)"
+        ]
+      }
+    },
+    "docker-expert": {
+      "type": "domain",
+      "priority": "high",
+      "enforcement": "suggest",
+      "promptTriggers": {
+        "keywords": [
+          "dockerfile",
+          "docker-compose",
+          "docker",
+          "container",
+          "docker build",
+          "docker image"
+        ],
+        "intentPatterns": [
+          "(build|optimize|secure).*(image|container|docker)",
+          "(create|write).*(dockerfile|docker-compose)"
+        ]
+      }
+    },
+    "gitlab-ci-patterns": {
+      "type": "domain",
+      "priority": "medium",
+      "enforcement": "suggest",
+      "promptTriggers": {
+        "keywords": [
+          "gitlab-ci",
+          ".gitlab-ci.yml",
+          "gitlab pipeline",
+          "gitlab runner",
+          "gitlab ci"
+        ],
+        "intentPatterns": [
+          "(create|setup|fix).*(ci|pipeline|gitlab)",
+          "(optimize|speed).*(pipeline|ci)"
+        ]
+      }
+    },
+    "git-commit": {
+      "type": "domain",
+      "priority": "low",
+      "enforcement": "suggest",
+      "promptTriggers": {
+        "keywords": ["/commit"],
+        "intentPatterns": ["(commit|stage).*(change|file)"]
+      }
+    },
+    "find-skills": {
+      "type": "domain",
+      "priority": "low",
+      "enforcement": "suggest",
+      "promptTriggers": {
+        "keywords": ["find skill", "install skill", "search skill", "available skills"],
+        "intentPatterns": [
+          "(find|search|install).*(skill|plugin|extension)",
+          "(what|which).*(skill|plugin).*(available|exist)"
+        ]
+      }
+    },
+    "skill-creator": {
+      "type": "domain",
+      "priority": "low",
+      "enforcement": "suggest",
+      "promptTriggers": {
+        "keywords": ["create skill", "new skill", "update skill", "build skill"],
+        "intentPatterns": ["(create|build|make|update).*(skill)"]
+      }
+    },
+    "tdd": {
+      "type": "domain",
+      "priority": "medium",
+      "enforcement": "suggest",
+      "promptTriggers": {
+        "keywords": ["tdd", "red-green-refactor", "test-driven", "test first"],
+        "intentPatterns": [
+          "(write|add).*(test).*(first|before|driven)",
+          "(use|follow).*(tdd|test-driven)"
+        ]
+      }
+    },
+{{#if isAiChatApp}}
+    "ai-sdk": {
+      "type": "domain",
+      "priority": "high",
+      "enforcement": "suggest",
+      "promptTriggers": {
+        "keywords": [
+          "ai sdk",
+          "generatetext",
+          "streamtext",
+          "usechat",
+          "usecompletion",
+          "tool calling",
+          "vercel ai sdk"
+        ],
+        "intentPatterns": [
+          "(add|build|implement).*(ai|llm|chat|agent)",
+          "(stream|generate).*(text|object|response)"
+        ]
+      }
+    },
+    "ai-elements": {
+      "type": "domain",
+      "priority": "medium",
+      "enforcement": "suggest",
+      "promptTriggers": {
+        "keywords": [
+          "ai-elements",
+          "ai chat",
+          "chat component",
+          "chat interface"
+        ],
+        "intentPatterns": [
+          "(create|add|build).*(chat|conversation).*(component|ui)",
+          "(add|create).*(ai).*(element|component)"
+        ]
+      }
+    },
+    "vercel-react-best-practices": {
+      "type": "domain",
+      "priority": "medium",
+      "enforcement": "suggest",
+      "promptTriggers": {
+        "keywords": [
+          "react performance",
+          "bundle size",
+          "waterfall",
+          "re-render",
+          "react optimization",
+          "lazy loading"
+        ],
+        "intentPatterns": [
+          "(optimize|improve|fix).*(performance|render|bundle)",
+          "(reduce|minimize).*(re-render|bundle|waterfall)"
+        ]
+      }
+    },
+    "vercel-composition-patterns": {
+      "type": "domain",
+      "priority": "medium",
+      "enforcement": "suggest",
+      "promptTriggers": {
+        "keywords": [
+          "compound component",
+          "composition pattern",
+          "boolean prop",
+          "render prop",
+          "component api"
+        ],
+        "intentPatterns": [
+          "(refactor|redesign).*(component|props)",
+          "(replace|remove).*(boolean).*(prop)"
+        ]
+      }
+    },
+    "frontend-design": {
+      "type": "domain",
+      "priority": "medium",
+      "enforcement": "suggest",
+      "promptTriggers": {
+        "keywords": [
+          "frontend design",
+          "build ui",
+          "design system",
+          "landing page",
+          "web component"
+        ],
+        "intentPatterns": [
+          "(create|build|design).*(page|interface|landing|ui)",
+          "(style|beautify).*(component|page)"
+        ]
+      }
+    },
+    "web-design-guidelines": {
+      "type": "domain",
+      "priority": "medium",
+      "enforcement": "suggest",
+      "promptTriggers": {
+        "keywords": [
+          "review ui",
+          "check accessibility",
+          "audit design",
+          "review ux",
+          "web interface guidelines"
+        ],
+        "intentPatterns": [
+          "(review|audit|check).*(ui|ux|accessibility|design)",
+          "(evaluate|assess).*(interface|usability)"
+        ]
+      }
+    },
+{{/if}}
+{{#if hasLangfuse}}
+    "langfuse-observability": {
+      "type": "domain",
+      "priority": "medium",
+      "enforcement": "suggest",
+      "promptTriggers": {
+        "keywords": ["langfuse", "tracing", "llm observability", "llm tracing"],
+        "intentPatterns": [
+          "(add|setup|instrument).*(trace|observability|langfuse)",
+          "(monitor|observe).*(llm|ai)"
+        ]
+      }
+    },
+{{/if}}
+{{#if hasDatabase}}
+    "postgres-drizzle": {
+      "type": "domain",
+      "priority": "high",
+      "enforcement": "suggest",
+      "promptTriggers": {
+        "keywords": [
+          "drizzle",
+          "database",
+          "schema",
+          "migration",
+          "postgresql",
+          "postgres",
+          "sql"
+        ],
+        "intentPatterns": [
+          "(create|add|modify).*(table|schema|migration|column)",
+          "(query|join|index).*(database|table)"
+        ]
+      }
+    },
+{{/if}}
+{{#if hasAuth}}
+    "better-auth-best-practices": {
+      "type": "domain",
+      "priority": "high",
+      "enforcement": "suggest",
+      "promptTriggers": {
+        "keywords": [
+          "better-auth",
+          "authentication",
+          "auth",
+          "login",
+          "signup",
+          "session"
+        ],
+        "intentPatterns": [
+          "(add|setup|implement).*(auth|login|signup)",
+          "(configure|fix).*(session|token)"
+        ]
+      }
+    },
+    "email-and-password-best-practices": {
+      "type": "domain",
+      "priority": "medium",
+      "enforcement": "suggest",
+      "promptTriggers": {
+        "keywords": [
+          "email password",
+          "password validation",
+          "email auth",
+          "credential"
+        ],
+        "intentPatterns": [
+          "(implement|add).*(email|password).*(auth|login)",
+          "(validate|check).*(password|email)"
+        ]
+      }
+    },
+{{/if}}
+    "next-best-practices": {
+      "type": "domain",
+      "priority": "high",
+      "enforcement": "suggest",
+      "promptTriggers": {
+        "keywords": [
+          "next.js",
+          "nextjs",
+          "app router",
+          "server component",
+          "route handler",
+          "middleware"
+        ],
+        "intentPatterns": [
+          "(create|add).*(page|route|api|component)",
+          "(optimize|fix).*(next|ssr|hydration)"
+        ]
+      }
+    }
+  }
+}

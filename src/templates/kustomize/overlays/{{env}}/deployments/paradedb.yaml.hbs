@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: paradedb
+spec:
+  selector:
+    matchLabels:
+      app: paradedb
+  template:
+    metadata:
+      labels:
+        app: paradedb
+    spec:
+      containers:
+        - name: paradedb
+          image: paradedb/paradedb:latest
+          ports:
+            - containerPort: 5432
+          envFrom:
+            - configMapRef:
+                name: paradedb-config
+          volumeMounts:
+            - name: paradedb-data
+              mountPath: /var/lib/postgresql/data
+      volumes:
+        - name: paradedb-data
+          persistentVolumeClaim:
+            claimName: paradedb-pvc

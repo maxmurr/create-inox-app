@@ -1,0 +1,43 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{appName}}-db-migrate
+spec:
+  schedule: "0 0 31 2 *"
+  suspend: true
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: db-migrate
+              image: {{registryImage}}:latest
+              command: ["node", "migrate.mjs"]
+              envFrom:
+                - configMapRef:
+                    name: {{appName}}-config
+          restartPolicy: Never
+          imagePullSecrets:
+            - name: regcred
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{appName}}-db-seed
+spec:
+  schedule: "0 0 31 2 *"
+  suspend: true
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: db-seed
+              image: {{registryImage}}:latest
+              command: ["node", "seed.mjs"]
+              envFrom:
+                - configMapRef:
+                    name: {{appName}}-config
+          restartPolicy: Never
+          imagePullSecrets:
+            - name: regcred

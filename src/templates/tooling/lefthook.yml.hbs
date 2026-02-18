@@ -1,0 +1,25 @@
+pre-commit:
+  parallel: true
+  commands:
+{{#if hasOxlint}}
+    lint:
+      glob: "*.{js,ts,jsx,tsx}"
+      run: bunx oxlint {staged_files}
+{{/if}}
+{{#if hasOxfmt}}
+    format:
+      glob: "*.{js,ts,jsx,tsx,json,css}"
+      run: bunx oxfmt {staged_files}
+{{/if}}
+
+{{#if hasCommitlint}}
+commit-msg:
+  commands:
+    commitlint:
+      run: bunx commitlint --edit {1}
+{{/if}}
+
+pre-push:
+  commands:
+    check-types:
+      run: bun run check-types

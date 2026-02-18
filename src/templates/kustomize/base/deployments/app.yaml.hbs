@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{appName}}
+spec:
+  selector:
+    matchLabels:
+      app: {{appName}}
+  template:
+    metadata:
+      labels:
+        app: {{appName}}
+    spec:
+      containers:
+        - name: {{appName}}
+          image: {{registryImage}}:latest
+          ports:
+            - containerPort: 3000
+          resources:
+            requests:
+              cpu: "500m"
+              memory: "512Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+          envFrom:
+            - configMapRef:
+                name: {{appName}}-config
+          readinessProbe:
+            httpGet:
+              path: /api/health
+              port: 3000
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /api/health
+              port: 3000
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            failureThreshold: 3
+      imagePullSecrets:
+        - name: regcred

@@ -1,0 +1,49 @@
+@import "tailwindcss";
+
+*,
+::after,
+::before,
+::backdrop,
+::file-selector-button {
+  border-color: var(--border);
+}
+
+:root {
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.1822 0 0);
+  --muted: oklch(0.9193 0.0058 84.5672);
+  --muted-foreground: oklch(0.4926 0 0);
+  --border: oklch(0.8883 0.0042 91.4507);
+  --ring: oklch(0.2103 0.0059 285.8852);
+  --radius: 0.5rem;
+}
+
+.dark {
+  --background: oklch(0.1591 0 0);
+  --foreground: oklch(0.9851 0 0);
+  --muted: oklch(0.2264 0 0);
+  --muted-foreground: oklch(0.4926 0 0);
+  --border: oklch(0.2264 0 0);
+  --ring: oklch(0.8711 0.0055 286.286);
+  --radius: 0.625rem;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+@layer base {
+  body {
+    @apply bg-background text-foreground;
+  }
+}

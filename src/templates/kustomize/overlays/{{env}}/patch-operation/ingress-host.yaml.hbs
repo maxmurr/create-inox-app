@@ -1,0 +1,15 @@
+- op: replace
+  path: /spec/rules/0/host
+  value: {{currentEnv.domain}}
+{{#if hasTls}}
+- op: add
+  path: /metadata/annotations
+  value:
+    cert-manager.io/cluster-issuer: letsencrypt-dns01
+- op: add
+  path: /spec/tls
+  value:
+    - hosts:
+        - "{{currentEnv.domain}}"
+      secretName: {{currentEnv.domain}}-tls
+{{/if}}
