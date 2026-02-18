@@ -1,5 +1,11 @@
 # create-inox-app
 
+## 0.3.3
+
+### Patch Changes
+
+- Re-release after CI publish conflict
+
 ## 0.3.2
 
 ### Patch Changes
