@@ -11,7 +11,8 @@
     "db:migrate": "bun run lib/db/migrate.ts",
     "db:push": "drizzle-kit push",
     "db:seed": "bun run lib/db/seed.ts",
-    "db:studio": "drizzle-kit studio"
+    "db:studio": "drizzle-kit studio",
+    "setup": "bun run db:generate && bun run db:migrate && SEED_EMAILS=example@gmail.com bun run db:seed"
   },
   "dependencies": {
     "@ai-sdk/react": "^3.0.88",

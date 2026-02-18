@@ -16,6 +16,9 @@
     "db:migrate": "turbo run db:migrate",
     "db:push": "turbo run db:push",
     "db:studio": "turbo run db:studio",
+{{#if hasDatabase}}
+    "setup": "turbo run setup",
+{{/if}}
     "docker:dev": "docker compose --profile dev up",
     "docker:dev:down": "docker compose --profile dev down",
     "docker:prod": "docker compose --profile prod up --build"
