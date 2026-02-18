@@ -1,6 +1,6 @@
 {
 	"name": "create-inox-app",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"description": "Scaffold production-ready monorepo projects with one command",
 	"type": "module",
 	"license": "MIT",
@@ -23,7 +23,7 @@
 	],
 	"scripts": {
 		"dev": "bun run bin/cli.ts",
-		"build": "tsdown && cp -r src/templates dist/templates",
+		"build": "tsdown && printf '%s\n' '#!/usr/bin/env node' \"$(cat dist/cli.js)\" > dist/cli.js && cp -r src/templates dist/templates",
 		"check-types": "tsc --noEmit",
 		"changeset": "changeset",
 		"version": "changeset version",
