@@ -1,5 +1,11 @@
 # create-inox-app
 
+## 0.2.1
+
+### Patch Changes
+
+- Update post-install next-steps to use `bun setup` instead of manual db:migrate
+
 ## 0.2.0
 
 ### Minor Changes
