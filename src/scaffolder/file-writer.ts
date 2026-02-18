@@ -1,4 +1,4 @@
-import { writeFileSync, mkdirSync, chmodSync } from "node:fs";
+import { writeFileSync, mkdirSync, chmodSync, symlinkSync, readdirSync } from "node:fs";
 import { join, dirname, extname } from "node:path";
 
 export const writeFiles = (
@@ -13,6 +13,24 @@ export const writeFiles = (
     if (extname(absPath) === ".sh") {
       chmodSync(absPath, 0o755);
     }
+  }
+};
+
+export const linkSkills = (projectDir: string): void => {
+  const agentsDir = join(projectDir, ".agents", "skills");
+  const claudeSkillsDir = join(projectDir, ".claude", "skills");
+
+  try {
+    const skills = readdirSync(agentsDir);
+    mkdirSync(claudeSkillsDir, { recursive: true });
+    for (const skill of skills) {
+      symlinkSync(
+        join("..", "..", ".agents", "skills", skill),
+        join(claudeSkillsDir, skill),
+      );
+    }
+  } catch {
+    // .agents/skills may not exist for some configurations
   }
 };
 

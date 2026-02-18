@@ -5,7 +5,7 @@ import { spinner } from "@clack/prompts";
 import type { ProjectConfig } from "../types.js";
 import { buildTemplateContext } from "./template-context.js";
 import { renderTemplateDir } from "./template-renderer.js";
-import { writeFiles, mergeFiles, stripPrefix } from "./file-writer.js";
+import { writeFiles, mergeFiles, stripPrefix, linkSkills } from "./file-writer.js";
 import { gitInit } from "./git-init.js";
 import { installDeps } from "./install-deps.js";
 
@@ -99,6 +99,7 @@ export const scaffold = async (config: ProjectConfig): Promise<void> => {
   }
 
   writeFiles(appDir, appFiles);
+  linkSkills(appDir);
   s.stop(`Scaffolded ${appFiles.size} app files → ${config.projectName}/`);
 
   // --- Kustomize files (split into base + overlays repos) ---
