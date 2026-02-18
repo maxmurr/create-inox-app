@@ -1,5 +1,11 @@
 # create-inox-app
 
+## 0.2.3
+
+### Patch Changes
+
+- Create skill symlinks in .claude/skills so Claude Code can discover agent skills
+
 ## 0.2.2
 
 ### Patch Changes
