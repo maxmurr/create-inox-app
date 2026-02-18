@@ -28,6 +28,18 @@ export const parseFlags = (argv: string[]): CliFlags => {
         flags.gitlabGroup = next;
         i++;
         break;
+      case "--gitlab-url":
+        flags.gitlabUrl = next;
+        i++;
+        break;
+      case "--registry-host":
+        flags.registryHost = next;
+        i++;
+        break;
+      case "--domain-suffix":
+        flags.domainSuffix = next;
+        i++;
+        break;
       case "--template":
         flags.template = templateEnum.parse(next);
         i++;

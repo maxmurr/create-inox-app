@@ -10,6 +10,18 @@ export const buildReproducibleCmd = (config: ProjectConfig): string => {
     parts.push(`--gitlab-group ${config.gitlabGroup}`);
   }
 
+  if (config.gitlabUrl !== DEFAULT_CONFIG.gitlabUrl) {
+    parts.push(`--gitlab-url ${config.gitlabUrl}`);
+  }
+
+  if (config.registryHost !== DEFAULT_CONFIG.registryHost) {
+    parts.push(`--registry-host ${config.registryHost}`);
+  }
+
+  if (config.domainSuffix !== DEFAULT_CONFIG.domainSuffix) {
+    parts.push(`--domain-suffix ${config.domainSuffix}`);
+  }
+
   parts.push(`--template ${config.template}`);
 
   if (config.database !== "none") {

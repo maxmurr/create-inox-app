@@ -1,5 +1,11 @@
 # create-inox-app
 
+## 0.3.0
+
+### Minor Changes
+
+- Make company-specific infrastructure values configurable via new CLI flags and interactive prompts: `--registry-host`, `--domain-suffix`, `--gitlab-url`. Remove hardcoded seed password and auth secret fallbacks. Improve default credentials in templates.
+
 ## 0.2.4
 
 ### Patch Changes

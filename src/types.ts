@@ -19,6 +19,9 @@ export type Addon = ToolingAddon | InfraAddon;
 export interface ProjectConfig {
   projectName: string;
   gitlabGroup: string;
+  gitlabUrl: string;
+  registryHost: string;
+  domainSuffix: string;
   template: Template;
   database: Database;
   cache: Cache;
@@ -35,6 +38,7 @@ export interface TemplateContext {
   projectName: string;
   appName: string;
   gitlabGroup: string;
+  gitlabUrl: string;
   registryImage: string;
 
   hasDatabase: boolean;
@@ -68,6 +72,9 @@ export interface CliFlags {
   _command: "create" | "history";
   name?: string;
   gitlabGroup?: string;
+  gitlabUrl?: string;
+  registryHost?: string;
+  domainSuffix?: string;
   template?: Template;
   database?: Database;
   cache?: Cache;

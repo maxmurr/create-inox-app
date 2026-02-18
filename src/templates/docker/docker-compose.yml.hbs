@@ -31,9 +31,9 @@ services:
     profiles: [dev, prod]
     image: paradedb/paradedb:latest
     environment:
-      POSTGRES_USER: app
-      POSTGRES_PASSWORD: app
-      POSTGRES_DB: app
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: changeme
+      POSTGRES_DB: {{appName}}
     ports:
       - "5432:5432"
     volumes:

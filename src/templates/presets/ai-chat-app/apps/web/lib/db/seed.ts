@@ -7,32 +7,24 @@ import * as schema from "./schema";
 
 const DATABASE_URL = process.env.DATABASE_URL;
 const SEED_EMAILS = process.env.SEED_EMAILS;
-const SEED_PASSWORD = "CHANGE_ME";
+const SEED_PASSWORD = process.env.SEED_PASSWORD;
+const BETTER_AUTH_SECRET = process.env.BETTER_AUTH_SECRET;
 
-if (!DATABASE_URL) {
-  process.stderr.write(
-    JSON.stringify({
-      timestamp: new Date().toISOString(),
-      level: "error",
-      event: "db:seed",
-      outcome: "failure",
-      error: "DATABASE_URL is not set",
-    }) + "\n",
-  );
-  process.exit(1);
-}
+const requiredEnvVars = { DATABASE_URL, SEED_EMAILS, SEED_PASSWORD, BETTER_AUTH_SECRET };
 
-if (!SEED_EMAILS) {
-  process.stderr.write(
-    JSON.stringify({
-      timestamp: new Date().toISOString(),
-      level: "error",
-      event: "db:seed",
-      outcome: "failure",
-      error: "SEED_EMAILS is not set",
-    }) + "\n",
-  );
-  process.exit(1);
+for (const [name, value] of Object.entries(requiredEnvVars)) {
+  if (!value) {
+    process.stderr.write(
+      JSON.stringify({
+        timestamp: new Date().toISOString(),
+        level: "error",
+        event: "db:seed",
+        outcome: "failure",
+        error: `${name} is not set`,
+      }) + "\n",
+    );
+    process.exit(1);
+  }
 }
 
 function deriveName(email: string): string {
@@ -51,7 +43,7 @@ try {
 
   const auth = betterAuth({
     database: drizzleAdapter(db, { provider: "pg", schema }),
-    secret: process.env.BETTER_AUTH_SECRET ?? "CHANGE_ME",
+    secret: BETTER_AUTH_SECRET!,
     baseURL: process.env.BETTER_AUTH_URL ?? "http://localhost:3000",
     emailAndPassword: { enabled: true },
   });

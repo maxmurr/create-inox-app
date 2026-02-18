@@ -4,7 +4,7 @@ import { buildRegistryImage, buildDomain } from "../constants.js";
 export const buildTemplateContext = (config: ProjectConfig): TemplateContext => {
   const environments = config.environments.map((env, i) => ({
     name: env,
-    domain: buildDomain(config.projectName, env),
+    domain: buildDomain(config.projectName, env, config.domainSuffix),
     isFirst: i === 0,
     isLast: i === config.environments.length - 1,
   }));
@@ -13,7 +13,9 @@ export const buildTemplateContext = (config: ProjectConfig): TemplateContext => 
     projectName: config.projectName,
     appName: config.projectName,
     gitlabGroup: config.gitlabGroup,
+    gitlabUrl: config.gitlabUrl,
     registryImage: buildRegistryImage(
+      config.registryHost,
       config.gitlabGroup,
       config.projectName,
       config.projectName,
@@ -22,7 +24,7 @@ export const buildTemplateContext = (config: ProjectConfig): TemplateContext => 
     hasDatabase: config.database !== "none",
     isParadedb: config.database === "postgresql-paradedb",
     hasRedis: config.cache === "redis",
-    hasAuth: config.auth === "better-auth",
+    hasAuth: config.auth !== "none",
     hasLangfuse: config.observability === "langfuse",
 
     hasIngress: config.addons.includes("ingress"),

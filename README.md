@@ -46,6 +46,9 @@ npx create-inox-app@latest my-app \
   --observability langfuse \
   --environments dev,staging,production \
   --gitlab-group my-group \
+  --gitlab-url https://gitlab.example.com \
+  --registry-host registry.example.com \
+  --domain-suffix apps.example.com \
   --git \
   --install
 ```
@@ -60,6 +63,9 @@ npx create-inox-app@latest my-app \
 | `--observability <o>` | `langfuse` \| `none` |
 | `--environments <e>` | Comma-separated: `dev,staging,production` |
 | `--gitlab-group <g>` | GitLab group name |
+| `--gitlab-url <url>` | GitLab instance URL |
+| `--registry-host <host>` | Docker registry host |
+| `--domain-suffix <suffix>` | Domain suffix for environment URLs |
 | `--git` / `--no-git` | Initialize git repository |
 | `--install` / `--no-install` | Install dependencies |
 | `-y, --yes` | Accept all defaults |

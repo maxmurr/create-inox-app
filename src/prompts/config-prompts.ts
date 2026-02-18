@@ -14,6 +14,9 @@ import { DEFAULT_CONFIG } from "../constants.js";
 import { navigableGroup } from "./navigable-group.js";
 import { promptProjectName } from "./project-name.js";
 import { promptGitlabGroup } from "./gitlab-group.js";
+import { promptGitlabUrl } from "./gitlab-url.js";
+import { promptRegistryHost } from "./registry-host.js";
+import { promptDomainSuffix } from "./domain-suffix.js";
 import { promptTemplate } from "./template.js";
 import { promptDatabase } from "./database.js";
 import { promptCache } from "./cache.js";
@@ -31,6 +34,9 @@ export const gatherConfig = async (flags: CliFlags): Promise<ProjectConfig> => {
       ...DEFAULT_CONFIG,
       projectName: name,
       gitlabGroup: flags.gitlabGroup ?? DEFAULT_CONFIG.gitlabGroup,
+      gitlabUrl: flags.gitlabUrl ?? DEFAULT_CONFIG.gitlabUrl,
+      registryHost: flags.registryHost ?? DEFAULT_CONFIG.registryHost,
+      domainSuffix: flags.domainSuffix ?? DEFAULT_CONFIG.domainSuffix,
       template: flags.template ?? DEFAULT_CONFIG.template,
       database: flags.database ?? DEFAULT_CONFIG.database,
       cache: flags.cache ?? DEFAULT_CONFIG.cache,
@@ -51,6 +57,18 @@ export const gatherConfig = async (flags: CliFlags): Promise<ProjectConfig> => {
     {
       key: "gitlabGroup",
       fn: () => flags.gitlabGroup ?? promptGitlabGroup(),
+    },
+    {
+      key: "gitlabUrl",
+      fn: () => flags.gitlabUrl ?? promptGitlabUrl(),
+    },
+    {
+      key: "registryHost",
+      fn: () => flags.registryHost ?? promptRegistryHost(),
+    },
+    {
+      key: "domainSuffix",
+      fn: () => flags.domainSuffix ?? promptDomainSuffix(),
     },
     {
       key: "template",
@@ -108,6 +126,9 @@ export const gatherConfig = async (flags: CliFlags): Promise<ProjectConfig> => {
   return {
     projectName,
     gitlabGroup: (results.gitlabGroup as string) ?? DEFAULT_CONFIG.gitlabGroup,
+    gitlabUrl: (results.gitlabUrl as string) ?? DEFAULT_CONFIG.gitlabUrl,
+    registryHost: (results.registryHost as string) ?? DEFAULT_CONFIG.registryHost,
+    domainSuffix: (results.domainSuffix as string) ?? DEFAULT_CONFIG.domainSuffix,
     template: (results.template as Template) ?? DEFAULT_CONFIG.template,
     database: (results.database as Database) ?? DEFAULT_CONFIG.database,
     cache: (results.cache as Cache) ?? DEFAULT_CONFIG.cache,
