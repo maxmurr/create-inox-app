@@ -20,7 +20,7 @@ export const printPostInstall = (config: ProjectConfig): void => {
       "docker compose --profile dev up -d postgres" +
         (config.cache === "redis" ? " redis" : ""),
     );
-    steps.push("cd apps/web && bun run db:migrate");
+    steps.push("bun setup");
   } else if (config.cache === "redis") {
     steps.push("docker compose --profile dev up -d redis");
   }
