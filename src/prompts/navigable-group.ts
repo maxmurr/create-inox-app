@@ -31,6 +31,8 @@ export const navigableGroup = async (
         const prevIndex = shownSteps.pop()!;
         delete results[steps[prevIndex].key];
         i = prevIndex;
+      } else {
+        throw new UserCancelledError();
       }
       continue;
     }
