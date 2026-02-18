@@ -17,7 +17,7 @@ export const createInoxCli = async (): Promise<void> => {
   }
 
   renderTitle();
-  intro(pc.magenta("Create a new Inox project"));
+  intro(pc.red("Create a new Inox project"));
 
   try {
     const config = await gatherConfig(flags);
@@ -42,7 +42,7 @@ export const createInoxCli = async (): Promise<void> => {
 
     log.info(pc.dim(buildReproducibleCmd(config)));
 
-    outro(pc.magenta("Happy building!"));
+    outro(pc.red("Happy building!"));
 
     printPostInstall(config);
   } catch (err) {

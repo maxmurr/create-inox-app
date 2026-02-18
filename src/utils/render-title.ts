@@ -10,13 +10,10 @@ const TITLE_TEXT = `
 `;
 
 const INOX_THEME = {
-  blue: "#3B82F6",
-  cyan: "#06B6D4",
-  teal: "#14B8A6",
-  green: "#22C55E",
-  lime: "#84CC16",
-  yellow: "#EAB308",
-  orange: "#F97316",
+  red: "#D20000",
+  warmRed: "#E83600",
+  orange: "#F06800",
+  amber: "#F59E0B",
 };
 
 export const renderTitle = (): void => {

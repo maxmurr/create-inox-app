@@ -28,10 +28,10 @@ export const printPostInstall = (config: ProjectConfig): void => {
   steps.push("bun run dev");
 
   consola.box({
-    title: pc.bold(pc.magenta("Next steps")),
+    title: pc.bold(pc.red("Next steps")),
     message: steps.map((s) => pc.cyan(s)).join("\n"),
     style: {
-      borderColor: "magenta",
+      borderColor: "red",
     },
   });
 };
