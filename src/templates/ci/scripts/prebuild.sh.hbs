@@ -1,0 +1,11 @@
+#!/bin/bash
+set -e
+
+echo "Setting up Docker buildx..."
+
+mkdir -p .docker
+echo "{\"auths\":{\"$CI_REGISTRY\":{\"auth\":\"$(printf "%s:%s" "$CI_REGISTRY_USER" "$CI_REGISTRY_PASSWORD" | base64)\"}}}" > .docker/config.json
+
+docker buildx create --use --name builder --driver docker-container --config .docker/buildkitd.toml 2>/dev/null || docker buildx use builder
+
+echo "Buildx setup complete"

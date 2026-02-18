@@ -1,0 +1,6 @@
+{
+  "experimentalTailwindcss": {
+    "stylesheet": "./apps/web/app/globals.css",
+    "functions": ["cn", "clsx"]
+  }
+}

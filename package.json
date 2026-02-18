@@ -1,0 +1,47 @@
+{
+	"name": "create-inox-app",
+	"version": "0.1.0",
+	"description": "Scaffold production-ready monorepo projects with one command",
+	"type": "module",
+	"license": "MIT",
+	"bin": {
+		"create-inox-app": "./dist/cli.js"
+	},
+	"files": [
+		"dist"
+	],
+	"engines": {
+		"node": ">=20"
+	},
+	"keywords": [
+		"create",
+		"inox",
+		"scaffold",
+		"nextjs",
+		"monorepo",
+		"cli"
+	],
+	"scripts": {
+		"dev": "bun run bin/cli.ts",
+		"build": "tsdown && cp -r src/templates dist/templates",
+		"check-types": "tsc --noEmit",
+		"changeset": "changeset",
+		"version": "changeset version",
+		"release": "bun run build && changeset publish"
+	},
+	"devDependencies": {
+		"@changesets/cli": "^2.29.8",
+		"@clack/core": "^0.4.1",
+		"@clack/prompts": "^0.10.0",
+		"@types/gradient-string": "^1.1.6",
+		"@types/node": "^22.13.4",
+		"consola": "^3.4.0",
+		"execa": "^9.5.2",
+		"gradient-string": "^3.0.0",
+		"handlebars": "^4.7.8",
+		"picocolors": "^1.1.1",
+		"tsdown": "^0.11.4",
+		"typescript": "^5.7.3",
+		"zod": "^3.24.2"
+	}
+}

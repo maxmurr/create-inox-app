@@ -1,0 +1,36 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- https://gitlab.example.com/{{gitlabGroup}}/{{projectName}}/kustomize/base//?ref=main
+{{#if isParadedb}}
+- storage/paradedb-pvc.yaml
+- deployments/paradedb.yaml
+- services/paradedb.yaml
+{{/if}}
+{{#if hasRedis}}
+- deployments/redis.yaml
+- services/redis.yaml
+{{/if}}
+
+configMapGenerator:
+- envs:
+  - configs/{{appName}}.config.env
+  name: {{appName}}-config
+{{#if isParadedb}}
+- envs:
+  - configs/paradedb.config.env
+  name: paradedb-config
+{{/if}}
+
+{{#if hasIngress}}
+patches:
+- path: patch-operation/ingress-host.yaml
+  target:
+    kind: Ingress
+    labelSelector: domain-group={{appName}}
+{{/if}}
+
+images:
+- name: {{registryImage}}
+  newTag: latest

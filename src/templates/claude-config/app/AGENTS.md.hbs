@@ -1,0 +1,185 @@
+# AGENTS.md
+
+This file provides guidance to AI coding agents working with code in this repository.
+
+## Commands
+
+```bash
+# Package manager: bun (enforced via packageManager field — pnpm/npm won't work)
+bun install
+
+# Dev (all apps via turbo, Next.js on port 3000)
+bun run dev
+
+# Build
+bun run build
+
+# Validate (lint + format + type-check — same as CI)
+bun run check
+
+# Individual checks
+{{#if hasOxlint}}
+bun run lint          # oxlint
+{{/if}}
+{{#if hasOxfmt}}
+bun run format        # oxfmt --check
+{{/if}}
+bun run check-types   # turbo type-check
+{{#if hasOxlint}}
+
+# Fix lint/format
+bun run lint:fix
+{{/if}}
+{{#if hasOxfmt}}
+bun run format:fix
+{{/if}}
+{{#if hasDatabase}}
+
+# Database (runs in apps/web context via turbo)
+bun run db:generate   # drizzle-kit generate migration
+bun run db:migrate    # run migrations
+bun run db:push       # push schema directly (dev only)
+bun run db:studio     # drizzle-kit studio
+
+# Seed users (run from apps/web)
+cd apps/web && bun run db:seed   # requires DATABASE_URL + SEED_EMAILS env vars
+{{/if}}
+
+# Docker
+bun run docker:dev               # dev profile (mounts source, hot reload)
+bun run docker:dev:down           # tear down dev
+bun run docker:prod              # prod profile (builds image)
+```
+
+## Architecture
+
+{{#if hasTurborepo}}
+Turborepo monorepo with a single Next.js{{#if isAiChatApp}} 16{{/if}} app and shared TypeScript config.
+{{else}}
+Next.js{{#if isAiChatApp}} 16{{/if}} application with shared TypeScript config.
+{{/if}}
+
+```
+apps/web/          # Next.js{{#if isAiChatApp}} 16{{/if}}, App Router, standalone output{{#if isAiChatApp}}, React Compiler, Turbopack{{/if}}
+packages/typescript-config/   # Shared TS configs (base, nextjs, react-library)
+```
+
+### Tech Stack
+
+{{#if isAiChatApp}}
+- **Framework**: Next.js 16 (App Router, RSC, `after()` hook)
+- **AI**: Vercel AI SDK v6 + OpenRouter (models: `gpt-oss-120b`, `gpt-oss-20b`)
+{{#if hasDatabase}}
+- **DB**: PostgreSQL (ParadeDB) + Drizzle ORM (`pg` driver)
+{{/if}}
+{{#if hasAuth}}
+- **Auth**: Better Auth (email+password, sign-up disabled, users seeded)
+{{/if}}
+{{#if hasLangfuse}}
+- **Observability**: Langfuse via OpenTelemetry span processor
+{{/if}}
+- **UI**: shadcn/ui + Tailwind v4 (oklch color system) + Lucide icons
+- **Markdown**: Streamdown with code/math/mermaid/cjk plugins
+- **Styling**: Tailwind v4 only, `cn()` utility (clsx + tailwind-merge)
+- **Forms**: react-hook-form + Zod
+- **Env validation**: @t3-oss/env-nextjs (see `apps/web/env.ts`)
+{{else}}
+- **Framework**: Next.js (App Router, RSC)
+{{#if hasDatabase}}
+- **DB**: PostgreSQL (ParadeDB) + Drizzle ORM (`pg` driver)
+{{/if}}
+{{#if hasAuth}}
+- **Auth**: Better Auth
+{{/if}}
+{{#if hasLangfuse}}
+- **Observability**: Langfuse via OpenTelemetry span processor
+{{/if}}
+- **UI**: Tailwind v4
+- **Env validation**: @t3-oss/env-nextjs (see `apps/web/env.ts`)
+{{/if}}
+
+{{#if isAiChatApp}}
+### Key Directories (apps/web)
+
+- `app/api/chat/route.ts` — streaming chat endpoint (AI SDK `streamText` + `createUIMessageStream`)
+- `app/api/chat/input-guardrail.ts` — safety classifier (structured output)
+- `app/api/chat/sessions/` — CRUD for chat sessions/messages
+{{#if hasAuth}}
+- `app/api/auth/[...all]/` — Better Auth catch-all
+{{/if}}
+- `app/chat/` — main UI ({{#if hasAuth}}auth-guarded in layout, {{/if}}`useChat` hook)
+- `components/ai-elements/` — AI chat UI primitives (conversation, message, prompt-input, code-block)
+- `components/ui/` — shadcn/ui components
+{{#if hasDatabase}}
+- `lib/db/schema.ts` — Drizzle schema (user, session, account, verification, chatSession, chatMessage)
+{{/if}}
+{{#if hasAuth}}
+- `lib/auth.ts` / `lib/auth-client.ts` — Better Auth server/client instances
+{{/if}}
+- `lib/openrouter.ts` — OpenRouter provider setup
+- `env.ts` — type-safe env validation (all required server vars)
+
+### Patterns
+
+{{#if hasAuth}}
+- **API routes**: auth check via `auth.api.getSession({ headers: req.headers })` at top of every handler
+{{/if}}
+- **Chat streaming**: `streamText()` → `createUIMessageStream()` → `createUIMessageStreamResponse()`
+- **Message persistence**: user message saved before streaming, assistant message saved in `onFinish`
+- **Title generation**: auto-generated on first message via second LLM call, streamed as data parts
+- **Logging**: structured JSON to stdout/stderr (wide events with `logger.info(ctx)` at request end)
+- **Import alias**: `@/` maps to `apps/web/` root
+{{/if}}
+
+## Tooling
+
+{{#if hasOxfmt}}
+- **Formatter**: `oxfmt` (not biome/prettier). Fix: `bunx oxfmt <files>`
+{{/if}}
+{{#if hasOxlint}}
+- **Linter**: `oxlint`. Fix: `bunx oxlint --fix <files>`
+{{/if}}
+{{#if hasLefthook}}
+- **Git hooks**: Lefthook — pre-commit ({{#if hasOxlint}}oxlint{{/if}}{{#if (and hasOxlint hasOxfmt)}} + {{/if}}{{#if hasOxfmt}}oxfmt{{/if}}), {{#if hasCommitlint}}commit-msg (commitlint), {{/if}}pre-push (type-check)
+{{/if}}
+{{#if hasCommitlint}}
+- **Commits**: Conventional commits enforced by commitlint
+{{/if}}
+
+## Local Dev Setup
+
+{{#if hasDatabase}}
+Docker Compose provides PostgreSQL (ParadeDB on port 5432, creds: `app/app/app`){{#if hasRedis}} and Redis (port 6379){{/if}}.
+{{else}}
+{{#if hasRedis}}
+Docker Compose provides Redis (port 6379).
+{{/if}}
+{{/if}}
+
+```bash
+{{#if (or hasDatabase hasRedis)}}
+# Start infra only
+docker compose --profile dev up{{#if hasDatabase}} postgres{{/if}}{{#if hasRedis}} redis{{/if}}
+
+{{/if}}
+# Copy env
+cp apps/web/.env.example apps/web/.env
+# Fill in required env vars (see apps/web/env.ts)
+{{#if hasDatabase}}
+
+# Run migrations + seed
+cd apps/web && bun run db:migrate && SEED_EMAILS=user@example.com bun run db:seed
+{{/if}}
+
+# Start dev
+bun run dev
+```
+
+## CI/CD
+
+GitLab CI with 3 stages: `validate` → `build` → `deploy`.
+- **validate**: `bun run check` (lint + format + type-check)
+- **build**: Docker buildx with registry cache (main branch + tags only)
+{{#each environments}}
+- **deploy**: manual trigger to {{name}}
+{{/each}}
