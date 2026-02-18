@@ -34,4 +34,16 @@ export const printPostInstall = (config: ProjectConfig): void => {
       borderColor: "red",
     },
   });
+
+  if (config.environments.length > 0) {
+    consola.warn(
+      pc.yellow("Replace all ") +
+        pc.bold("CHANGE_ME") +
+        pc.yellow(" and ") +
+        pc.bold("REPLACE_ME") +
+        pc.yellow(" placeholders in ") +
+        pc.cyan("kustomize/overlays/*/configs/") +
+        pc.yellow(" before deploying."),
+    );
+  }
 };
